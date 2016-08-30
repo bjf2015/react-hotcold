@@ -3,10 +3,10 @@ var update = require('react-addons-update');
 
 var initialGameState = {
   randNum: parseInt(Math.random() * (100) + 1),
-  myNum: 0,
+  myNum: null,
   numHotness: '',
-  guessCount: 0,
-  guessSet: [1, 2, 3]
+  guessCount: null,
+  guessSet: []
 };
 
 var gameController = function(state, action) {
@@ -41,7 +41,7 @@ var gameController = function(state, action) {
       var afterSet = initSet.concat([action.userNum]);
       console.log('afterSet is', afterSet);
 
-      var guessCounter = state.guessCount++;
+      var guessCounter = state.guessCount + 1;
 
       var newState = update(state, {
         myNum: {$set: action.userNum},
@@ -49,6 +49,7 @@ var gameController = function(state, action) {
         guessSet: {$set: afterSet},
         guessCount: {$set: guessCounter}
       });
+      return newState;
     };
 
     if (action.type === actions.START_NEWGAME){
