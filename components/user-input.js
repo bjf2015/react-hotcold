@@ -4,7 +4,7 @@ let Provider = require('react-redux').Provider;
 let connect = require('react-redux').connect;
 
 var UserInput = React.createClass({
-  render() {
+  render: function() {
     return (
       <form>
         <input />

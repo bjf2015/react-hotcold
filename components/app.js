@@ -3,9 +3,10 @@ let ReactDOM = require('react-dom');
 let UserInput = require('../components/user-input');
 
 var App = React.createClass({
-  render() {
+  render: function() {
     return (
       <div>
+          "Hi!"
           <UserInput />
       </div>
     )
