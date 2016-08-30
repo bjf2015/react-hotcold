@@ -52,7 +52,9 @@
 	var redux = __webpack_require__(11);
 	var React = __webpack_require__(25);
 	var ReactDOM = __webpack_require__(53);
-	var UserInput = __webpack_require__(191);
+	var Provider = __webpack_require__(191).Provider;
+	var connect = __webpack_require__(191).connect;
+	var UserInput = __webpack_require__(200);
 	var Counter = __webpack_require__(201);
 	var FeedBack = __webpack_require__(202);
 	var GuessList = __webpack_require__(203);
@@ -65,17 +67,30 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      React.createElement(FeedBack, null),
+	      React.createElement(FeedBack, { numRating: this.props.feedback }),
 	      React.createElement(UserInput, null),
-	      React.createElement(Counter, null),
+	      React.createElement(Counter, { counter: this.props.counter }),
 	      React.createElement(GuessList, null)
 	    );
 	  }
 	
 	});
 	
+	var mapStateToProps = function mapStateToProps(state, props) {
+	  return {
+	    feedback: state.numHotness,
+	    counter: state.guessCount
+	  };
+	};
+	
+	var Container = connect(mapStateToProps)(App);
+	
 	document.addEventListener('DOMContentLoaded', function () {
-	  ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
+	  ReactDOM.render(React.createElement(
+	    Provider,
+	    { store: store },
+	    React.createElement(Container, null)
+	  ), document.getElementById('app'));
 	});
 	
 	store.dispatch(actions.makeGuess(53));
@@ -123,9 +138,9 @@
 	var initialGameState = {
 	  randNum: parseInt(Math.random() * 100 + 1),
 	  myNum: null,
-	  numHotness: '',
+	  numHotness: 'stargingfeedback',
 	  guessCount: null,
-	  guessSet: []
+	  guessSet: [1, 2, 3]
 	};
 	
 	var gameController = function gameController(state, action) {
@@ -22524,59 +22539,14 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(25);
-	var ReactDOM = __webpack_require__(53);
-	var Provider = __webpack_require__(192).Provider;
-	var connect = __webpack_require__(192).connect;
-	
-	var UserInput = React.createClass({
-	  displayName: 'UserInput',
-	
-	
-	  getInitialState: function getInitialState() {
-	    return {};
-	  },
-	
-	  onSubmit: function onSubmit(event) {
-	    event.preventDefault();
-	    console.log("this button works!");
-	  },
-	
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'input' },
-	      React.createElement(
-	        'form',
-	        { onSubmit: this.onSubmit },
-	        React.createElement('input', { type: 'text' }),
-	        React.createElement(
-	          'button',
-	          null,
-	          'Guess!'
-	        )
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = UserInput;
-
-/***/ },
-/* 192 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
 	exports.__esModule = true;
 	exports.connect = exports.Provider = undefined;
 	
-	var _Provider = __webpack_require__(193);
+	var _Provider = __webpack_require__(192);
 	
 	var _Provider2 = _interopRequireDefault(_Provider);
 	
-	var _connect = __webpack_require__(196);
+	var _connect = __webpack_require__(195);
 	
 	var _connect2 = _interopRequireDefault(_connect);
 	
@@ -22586,7 +22556,7 @@
 	exports.connect = _connect2["default"];
 
 /***/ },
-/* 193 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -22596,11 +22566,11 @@
 	
 	var _react = __webpack_require__(25);
 	
-	var _storeShape = __webpack_require__(194);
+	var _storeShape = __webpack_require__(193);
 	
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 	
-	var _warning = __webpack_require__(195);
+	var _warning = __webpack_require__(194);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -22670,7 +22640,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 194 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22686,7 +22656,7 @@
 	});
 
 /***/ },
-/* 195 */
+/* 194 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22715,7 +22685,7 @@
 	}
 
 /***/ },
-/* 196 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -22727,19 +22697,19 @@
 	
 	var _react = __webpack_require__(25);
 	
-	var _storeShape = __webpack_require__(194);
+	var _storeShape = __webpack_require__(193);
 	
 	var _storeShape2 = _interopRequireDefault(_storeShape);
 	
-	var _shallowEqual = __webpack_require__(197);
+	var _shallowEqual = __webpack_require__(196);
 	
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 	
-	var _wrapActionCreators = __webpack_require__(198);
+	var _wrapActionCreators = __webpack_require__(197);
 	
 	var _wrapActionCreators2 = _interopRequireDefault(_wrapActionCreators);
 	
-	var _warning = __webpack_require__(195);
+	var _warning = __webpack_require__(194);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -22747,11 +22717,11 @@
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _hoistNonReactStatics = __webpack_require__(199);
+	var _hoistNonReactStatics = __webpack_require__(198);
 	
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 	
-	var _invariant = __webpack_require__(200);
+	var _invariant = __webpack_require__(199);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
@@ -23114,7 +23084,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 197 */
+/* 196 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -23145,7 +23115,7 @@
 	}
 
 /***/ },
-/* 198 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23162,7 +23132,7 @@
 	}
 
 /***/ },
-/* 199 */
+/* 198 */
 /***/ function(module, exports) {
 
 	/**
@@ -23218,7 +23188,7 @@
 
 
 /***/ },
-/* 200 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23274,6 +23244,51 @@
 	module.exports = invariant;
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 200 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(25);
+	var ReactDOM = __webpack_require__(53);
+	var Provider = __webpack_require__(191).Provider;
+	var connect = __webpack_require__(191).connect;
+	
+	var UserInput = React.createClass({
+	  displayName: 'UserInput',
+	
+	
+	  getInitialState: function getInitialState() {
+	    return {};
+	  },
+	
+	  onSubmit: function onSubmit(event) {
+	    event.preventDefault();
+	    console.log("this button works!");
+	  },
+	
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'input' },
+	      React.createElement(
+	        'form',
+	        { onSubmit: this.onSubmit },
+	        React.createElement('input', { type: 'text' }),
+	        React.createElement(
+	          'button',
+	          null,
+	          'Guess!'
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = UserInput;
 
 /***/ },
 /* 201 */

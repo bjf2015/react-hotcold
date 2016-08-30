@@ -4,6 +4,8 @@ var store = require('./store');
 var redux = require('redux');
 let React = require('react');
 let ReactDOM = require('react-dom');
+let Provider = require('react-redux').Provider;
+let connect = require('react-redux').connect;
 let UserInput = require('../components/user-input');
 let Counter = require('../components/counter');
 let FeedBack = require('../components/feedback');
@@ -16,9 +18,9 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-      	<FeedBack />
+      	<FeedBack numRating={this.props.feedback}/>
          <UserInput />
-         <Counter />
+         <Counter counter={this.props.counter}/>
          <GuessList />
       </div>
     )
@@ -27,8 +29,21 @@ var App = React.createClass({
 
 });
 
+var mapStateToProps = function(state, props) {
+    return {
+        feedback: state.numHotness,
+        counter: state.guessCount
+    };
+};
+
+var Container = connect(mapStateToProps)(App);
+
 document.addEventListener('DOMContentLoaded', function() {
-  ReactDOM.render(<App />, document.getElementById('app'));
+  ReactDOM.render(
+  	<Provider store={store}>
+  	<Container />
+  	</Provider>,
+  	 document.getElementById('app'));
 
 });
 
@@ -36,4 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
 store.dispatch(actions.makeGuess(53));
 store.dispatch(actions.makeGuess(23));
 store.dispatch(actions.makeGuess(1));
+
+
 

@@ -4,9 +4,9 @@ var update = require('react-addons-update');
 var initialGameState = {
   randNum: parseInt(Math.random() * (100) + 1),
   myNum: null,
-  numHotness: '',
+  numHotness: 'stargingfeedback',
   guessCount: null,
-  guessSet: []
+  guessSet: [1,2,3]
 };
 
 var gameController = function(state, action) {
