@@ -83,10 +83,13 @@
 	  };
 	};
 	
+	//connects the values from mapStateToProps to App component
 	var Container = connect(mapStateToProps)(App);
 	
 	document.addEventListener('DOMContentLoaded', function () {
-	  ReactDOM.render(React.createElement(
+	  ReactDOM.render(
+	  //Provider is in place, components can access parts of the store, including the dispatch method, using the connect method.
+	  React.createElement(
 	    Provider,
 	    { store: store },
 	    React.createElement(Container, null)
