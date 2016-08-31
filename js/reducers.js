@@ -2,7 +2,7 @@ var actions = require('./actions');
 var update = require('react-addons-update');
 
 var initialGameState = {
-  randNum: parseInt(Math.random() * (100) + 1),
+  randNum: null,
   myNum: null,
   numHotness: '',
   guessCount: null,
@@ -57,10 +57,9 @@ var gameController = function(state, action) {
     };
 
     if (action.type === actions.START_NEWGAME){
-      var newRanNumber = parseInt(Math.random() * (100) + 1);
-      console.log('new random number' + newRanNumber);
+      
       return update(initialGameState, {
-        randNum: {$set: newRanNumber}
+        randNum: {$set: action.randNum}
         
       });
       

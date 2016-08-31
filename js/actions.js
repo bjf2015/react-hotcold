@@ -12,8 +12,9 @@ var makeGuess = function(guess) {
 var START_NEWGAME = 'START_NEWGAME';
 var startNewGame = function() {
   return {
-    type: START_NEWGAME
+    type: START_NEWGAME,
     //new random
+    randNum: parseInt(Math.random() * (100) + 1)
   }
 }
 
