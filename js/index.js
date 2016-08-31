@@ -30,6 +30,9 @@ var App = React.createClass({
 
 });
 
+
+//The mapStateToProps function describes how the different parts of the state should be inserted into the props of the component. 
+//Each key in the returned object is a single prop which will be added to the wrapped component. The value is the value which will be given to that prop.
 var mapStateToProps = function(state, props) {
     return {
         feedback: state.numHotness,
@@ -44,7 +47,8 @@ var Container = connect(mapStateToProps)(App);
 
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
-  	//Provider is in place, components can access parts of the store, including the dispatch method, using the connect method.
+  	//When the Provider is in place, components can access parts of the store, including the dispatch method, using the connect method.
+  	//The Provider passes the Redux store down to any components which request access to part of it. 
   	<Provider store={store}>
   	<Container />
   	</Provider>,

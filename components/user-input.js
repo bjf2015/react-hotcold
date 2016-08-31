@@ -39,4 +39,5 @@ var UserInput = React.createClass({
 //the connect method also inserts the dispatch function by default without mapStateProps()
 var Container = connect()(UserInput);
 
+//exporting container component
 module.exports = Container;
