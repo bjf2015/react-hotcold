@@ -33,7 +33,7 @@ var gameController = function(state, action) {
       else {
         numRating = 'You win!'
       }
-      // console.log('randNum is', state.randNum);
+      console.log('original ran', state.randNum);
       // console.log('userNum is', action.userNum);
       // console.log('numRating is', numRating);
 
@@ -41,7 +41,7 @@ var gameController = function(state, action) {
       // console.log('initSet is', initSet);
       var afterSet = initSet.concat([action.userNum]);
      console.log(afterSet.join(','));
-     
+
       // console.log('afterSet is', afterSet);
 
       var guessCounter = state.guessCount + 1;
@@ -52,11 +52,18 @@ var gameController = function(state, action) {
         guessSet: {$set: afterSet},
         guessCount: {$set: guessCounter}
       });
+
       return newState;
     };
 
     if (action.type === actions.START_NEWGAME){
-      return initialGameState;
+      var newRanNumber = parseInt(Math.random() * (100) + 1);
+      console.log('new random number' + newRanNumber);
+      return update(initialGameState, {
+        randNum: {$set: newRanNumber}
+        
+      });
+      
     };
 
     return state;

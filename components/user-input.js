@@ -10,9 +10,14 @@ var UserInput = React.createClass({
 		event.preventDefault();
 		console.log("this button works!");
 		console.log(this.refs.input.value);
-		var myGuess = this.refs.input.value;
+		var myGuess = parseInt(this.refs.input.value);
+    if (myGuess < 1 || myGuess > 100|| isNaN(myGuess) || myGuess === undefined) {
+          alert('Please enter an integer between 1 and 100');
+          return;
+        }
 		this.props.dispatch(actions.makeGuess(myGuess));
 		this.refs.input.value = '';
+
 	},
 
   render: function() {

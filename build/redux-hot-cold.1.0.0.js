@@ -77,6 +77,8 @@
 	
 	});
 	
+	//The mapStateToProps function describes how the different parts of the state should be inserted into the props of the component. 
+	//Each key in the returned object is a single prop which will be added to the wrapped component. The value is the value which will be given to that prop.
 	var mapStateToProps = function mapStateToProps(state, props) {
 	  return {
 	    feedback: state.numHotness,
@@ -91,7 +93,8 @@
 	
 	document.addEventListener('DOMContentLoaded', function () {
 	  ReactDOM.render(
-	  //Provider is in place, components can access parts of the store, including the dispatch method, using the connect method.
+	  //When the Provider is in place, components can access parts of the store, including the dispatch method, using the connect method.
+	  //The Provider passes the Redux store down to any components which request access to part of it. 
 	  React.createElement(
 	    Provider,
 	    { store: store },
@@ -168,7 +171,7 @@
 	    } else {
 	      numRating = 'You win!';
 	    }
-	    // console.log('randNum is', state.randNum);
+	    console.log('original ran', state.randNum);
 	    // console.log('userNum is', action.userNum);
 	    // console.log('numRating is', numRating);
 	
@@ -187,11 +190,17 @@
 	      guessSet: { $set: afterSet },
 	      guessCount: { $set: guessCounter }
 	    });
+	
 	    return newState;
 	  };
 	
 	  if (action.type === actions.START_NEWGAME) {
-	    return initialGameState;
+	    var newRanNumber = parseInt(Math.random() * 100 + 1);
+	    console.log('new random number' + newRanNumber);
+	    return update(initialGameState, {
+	      randNum: { $set: newRanNumber }
+	
+	    });
 	  };
 	
 	  return state;
@@ -23274,7 +23283,11 @@
 	    event.preventDefault();
 	    console.log("this button works!");
 	    console.log(this.refs.input.value);
-	    var myGuess = this.refs.input.value;
+	    var myGuess = parseInt(this.refs.input.value);
+	    if (myGuess < 1 || myGuess > 100 || isNaN(myGuess) || myGuess === undefined) {
+	      alert('Please enter an integer between 1 and 100');
+	      return;
+	    }
 	    this.props.dispatch(actions.makeGuess(myGuess));
 	    this.refs.input.value = '';
 	  },
@@ -23302,6 +23315,7 @@
 	//the connect method also inserts the dispatch function by default without mapStateProps()
 	var Container = connect()(UserInput);
 	
+	//exporting container component
 	module.exports = Container;
 
 /***/ },
