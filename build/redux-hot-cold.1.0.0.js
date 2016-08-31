@@ -127,6 +127,7 @@
 	var startNewGame = function startNewGame() {
 	  return {
 	    type: START_NEWGAME
+	    //new random
 	  };
 	};
 	
