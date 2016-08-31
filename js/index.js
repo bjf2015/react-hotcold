@@ -18,10 +18,11 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-      	<FeedBack numRating={this.props.feedback}/>
+      	<FeedBack numHotness={this.props.feedback}/>
          <UserInput />
          <Counter counter={this.props.counter}/>
-         <GuessList />
+         <GuessList guess={this.props.guessSet}/>
+         <NewGame />
       </div>
     )
   }
@@ -32,7 +33,9 @@ var App = React.createClass({
 var mapStateToProps = function(state, props) {
     return {
         feedback: state.numHotness,
-        counter: state.guessCount
+        counter: state.guessCount,
+        randNum: state.randNum,
+        guessSet: state.guessSet
     };
 };
 
@@ -50,9 +53,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-store.dispatch(actions.makeGuess(53));
-store.dispatch(actions.makeGuess(23));
-store.dispatch(actions.makeGuess(1));
+// store.dispatch(actions.makeGuess(53));
+// store.dispatch(actions.makeGuess(23));
+// store.dispatch(actions.makeGuess(1));
 
 
 

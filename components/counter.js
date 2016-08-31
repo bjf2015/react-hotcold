@@ -6,7 +6,7 @@ var Counter = function(props) {
 
 	return (
 
-		<div className="increment">Counter: {props.counter}</div>
+		<div className="increment">Guesses: {props.counter}</div>
 		);
 
 

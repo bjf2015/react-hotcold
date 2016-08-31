@@ -4,13 +4,14 @@ var update = require('react-addons-update');
 var initialGameState = {
   randNum: parseInt(Math.random() * (100) + 1),
   myNum: null,
-  numHotness: 'stargingfeedback',
+  numHotness: '',
   guessCount: null,
-  guessSet: [1,2,3]
+  guessSet: []
 };
 
 var gameController = function(state, action) {
     state = state || initialGameState;
+    console.log(state.randNum);
     if (action.type === actions.MAKE_GUESS){
       var numRating;
       var diffNum = Math.abs(state.randNum - action.userNum);
@@ -39,6 +40,8 @@ var gameController = function(state, action) {
       var initSet = state.guessSet.slice();
       // console.log('initSet is', initSet);
       var afterSet = initSet.concat([action.userNum]);
+     console.log(afterSet.join(','));
+     
       // console.log('afterSet is', afterSet);
 
       var guessCounter = state.guessCount + 1;

@@ -67,10 +67,11 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      React.createElement(FeedBack, { numRating: this.props.feedback }),
+	      React.createElement(FeedBack, { numHotness: this.props.feedback }),
 	      React.createElement(UserInput, null),
 	      React.createElement(Counter, { counter: this.props.counter }),
-	      React.createElement(GuessList, null)
+	      React.createElement(GuessList, { guess: this.props.guessSet }),
+	      React.createElement(NewGame, null)
 	    );
 	  }
 	
@@ -79,7 +80,9 @@
 	var mapStateToProps = function mapStateToProps(state, props) {
 	  return {
 	    feedback: state.numHotness,
-	    counter: state.guessCount
+	    counter: state.guessCount,
+	    randNum: state.randNum,
+	    guessSet: state.guessSet
 	  };
 	};
 	
@@ -96,9 +99,9 @@
 	  ), document.getElementById('app'));
 	});
 	
-	store.dispatch(actions.makeGuess(53));
-	store.dispatch(actions.makeGuess(23));
-	store.dispatch(actions.makeGuess(1));
+	// store.dispatch(actions.makeGuess(53));
+	// store.dispatch(actions.makeGuess(23));
+	// store.dispatch(actions.makeGuess(1));
 
 /***/ },
 /* 1 */
@@ -141,13 +144,14 @@
 	var initialGameState = {
 	  randNum: parseInt(Math.random() * 100 + 1),
 	  myNum: null,
-	  numHotness: 'stargingfeedback',
+	  numHotness: '',
 	  guessCount: null,
-	  guessSet: [1, 2, 3]
+	  guessSet: []
 	};
 	
 	var gameController = function gameController(state, action) {
 	  state = state || initialGameState;
+	  console.log(state.randNum);
 	  if (action.type === actions.MAKE_GUESS) {
 	    var numRating;
 	    var diffNum = Math.abs(state.randNum - action.userNum);
@@ -171,6 +175,8 @@
 	    var initSet = state.guessSet.slice();
 	    // console.log('initSet is', initSet);
 	    var afterSet = initSet.concat([action.userNum]);
+	    console.log(afterSet.join(','));
+	
 	    // console.log('afterSet is', afterSet);
 	
 	    var guessCounter = state.guessCount + 1;
@@ -23256,6 +23262,7 @@
 	
 	var React = __webpack_require__(25);
 	var ReactDOM = __webpack_require__(53);
+	var actions = __webpack_require__(1);
 	var Provider = __webpack_require__(191).Provider;
 	var connect = __webpack_require__(191).connect;
 	
@@ -23263,26 +23270,27 @@
 	  displayName: 'UserInput',
 	
 	
-	  getInitialState: function getInitialState() {
-	    return {};
-	  },
-	
 	  onSubmit: function onSubmit(event) {
 	    event.preventDefault();
 	    console.log("this button works!");
+	    console.log(this.refs.input.value);
+	    var myGuess = this.refs.input.value;
+	    this.props.dispatch(actions.makeGuess(myGuess));
+	    this.refs.input.value = '';
 	  },
 	
 	  render: function render() {
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'input' },
 	      React.createElement(
 	        'form',
 	        { onSubmit: this.onSubmit },
-	        React.createElement('input', { type: 'text' }),
+	        React.createElement('input', { type: 'text', placeholder: 'Enter your guess!', ref: 'input' }),
 	        React.createElement(
 	          'button',
-	          null,
+	          { type: 'submit' },
 	          'Guess!'
 	        )
 	      )
@@ -23291,7 +23299,10 @@
 	
 	});
 	
-	module.exports = UserInput;
+	//the connect method also inserts the dispatch function by default without mapStateProps()
+	var Container = connect()(UserInput);
+	
+	module.exports = Container;
 
 /***/ },
 /* 201 */
@@ -23307,7 +23318,7 @@
 		return React.createElement(
 			'div',
 			{ className: 'increment' },
-			'Counter: ',
+			'Guesses: ',
 			props.counter
 		);
 	};
@@ -23328,8 +23339,7 @@
 		return React.createElement(
 			'div',
 			{ className: 'game-feedback' },
-			'\'READY?!\', ',
-			props.numRating
+			props.numHotness
 		);
 	};
 	
@@ -23350,7 +23360,7 @@
 			'div',
 			{ className: 'number-list' },
 			'Guess List: ',
-			props.guess
+			props.guess.join(', ')
 		);
 	};
 	
@@ -23364,24 +23374,40 @@
 	
 	var React = __webpack_require__(25);
 	var ReactDOM = __webpack_require__(53);
+	var actions = __webpack_require__(1);
+	var connect = __webpack_require__(191).connect;
 	
-	var NewGame = function NewGame(props) {
-		return React.createElement(
-			'div',
-			{ className: 'reset-game' },
-			React.createElement(
-				'span',
-				null,
+	var NewGame = React.createClass({
+		displayName: 'NewGame',
+	
+	
+		onSubmit: function onSubmit(event) {
+			event.preventDefault();
+			console.log("New Game Clicked!");
+			this.props.dispatch(actions.startNewGame());
+		},
+	
+		render: function render() {
+			return React.createElement(
+				'div',
+				{ className: 'reset-game' },
 				React.createElement(
-					'button',
-					null,
-					'New Game!'
+					'form',
+					{ onSubmit: this.onSubmit },
+					React.createElement(
+						'button',
+						{ type: 'submit' },
+						'New Game!'
+					)
 				)
-			)
-		);
-	};
+			);
+		}
+	});
 	
-	module.exports = NewGame;
+	//the connect method also inserts the dispatch function by default without mapStateProps()
+	var Container = connect()(NewGame);
+	
+	module.exports = Container;
 
 /***/ }
 /******/ ]);

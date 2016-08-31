@@ -5,7 +5,7 @@ var Feedback = function(props) {
 
 return (
 	
-	<div className="game-feedback">'READY?!', {props.numRating}</div>
+	<div className="game-feedback">{props.numHotness}</div>
 
 	);
 
